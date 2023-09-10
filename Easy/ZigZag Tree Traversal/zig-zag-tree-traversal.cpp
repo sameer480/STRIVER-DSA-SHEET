@@ -103,48 +103,38 @@ struct Node {
 class Solution{
     public:
     //Function to store the zig zag order traversal of tree in a list.
-//     #include <vector>
-// #include <queue>
-
-// struct Node {
-//     int data;
-//     Node* left;
-//     Node* right;
-//     Node(int val) : data(val), left(nullptr), right(nullptr) {}
-// };
-
-vector<int> zigZagTraversal(Node* root) {
-    std::vector<int> result;
-    if (root == nullptr) {
-        return result;
+    vector<int> zigZagTraversal(Node* root)
+{
+    vector<int> result;
+    if(root == NULL) {
+        return result; // Change 'ans' to 'result'
     }
-
-    bool leftToRight = true;
-    std::queue<Node*> q;
+    queue<Node*> q;
     q.push(root);
-
-    while (!q.empty()) {
-        int levelSize = q.size();
-        std::vector<int> ans(levelSize); // Initialize the ans vector with the correct size.
-        for (int i = 0; i < levelSize; ++i) {
-            Node* front = q.front();
+    bool ltor = true;
+    while(!q.empty()) {
+        int size = q.size();
+        vector<int> ans; // Rename this vector to 'level'
+        for(int i = 0; i < size; i++) {
+            Node* frontNode = q.front();
             q.pop();
-
-            int idx = leftToRight ? i : levelSize - 1 - i; // Correct the index calculation.
-            ans[idx] = front->data;
-
-            if (front->left) {
-                q.push(front->left);
+            int index = ltor ? i : size - i - 1; // Correct the index calculation
+            ans.push_back(frontNode->data); // Push data to 'ans' vector
+            if(frontNode->left) {
+                q.push(frontNode->left);
             }
-            if (front->right) {
-                q.push(front->right);
+            if(frontNode->right) {
+                q.push(frontNode->right);
             }
         }
-
-        leftToRight = !leftToRight; // Toggle the direction for the next level.
-        result.insert(result.end(), ans.begin(), ans.end()); // Append the current level nodes to the result.
+        if(!ltor) {
+            reverse(ans.begin(), ans.end()); // Reverse the 'ans' vector if required
+        }
+        for(auto i: ans) {
+            result.push_back(i);
+        }
+        ltor = !ltor;
     }
-
     return result;
 }
 
