@@ -140,11 +140,10 @@ void solve(Node*root,vector<int>&v,int i){
 }
 vector<int> leftView(Node *root)
 {
-    vector<int> v;
+    vector<int>v;
     if(root==NULL){
         return v;
     }
-    solve(root,v,0);
-    return v;
+     solve(root,v,0);
    // Your code here
 }
